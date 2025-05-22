@@ -201,6 +201,10 @@ func (c *APIClient) setupClientAuth(config *ClientConfig) error {
 			}
 		} else {
 			var err error
+			// HACK: for XFusion iBMC
+			if c.Service.sessions == "" {
+			  c.Service.sessions = "/redfish/v1/SessionService/Sessions"
+			}
 			auth, err = c.Service.CreateSession(config.Username, config.Password)
 			if err != nil {
 				return err
